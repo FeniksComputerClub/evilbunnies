@@ -1,5 +1,6 @@
-#include "Helloworld.h"
+#include "HelloWorld.h"
 #include <iostream>
+
 HelloWorld::HelloWorld()
   : m_button("Hello World")   // creates a new button with label "Hello World".
 {

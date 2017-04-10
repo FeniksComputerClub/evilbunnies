@@ -32,7 +32,8 @@ define(CW_THREADS, [both])
 # Include cwm4 header.
 m4_include([cwm4/configure_ac_top.m4])
 
-PKG_CHECK_MODULES([CAIRO], [cairo])
+PKG_CHECK_MODULES([CAIROMM], [cairomm-1.0])
+PKG_CHECK_MODULES([GTKMM], [gtkmm-3.0])
 
 ### Uncomment this if the project is using doxygen to generate documentation.
 # We use doxygen for documentation.

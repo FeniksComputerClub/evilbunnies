@@ -4,12 +4,14 @@
 
 class MyArea : public Gtk::DrawingArea
 {
-public:
-  MyArea();
-  virtual ~MyArea();
+  public:
+    static int const width = 800;
+    static int const height = 800;
 
-protected:
-  //Override default signal handler:
-  bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
+    MyArea();
+    virtual ~MyArea();
+
+  protected:
+    // Override default signal handler:
+    bool on_draw(Cairo::RefPtr<Cairo::Context> const& cr) override;
 };
-

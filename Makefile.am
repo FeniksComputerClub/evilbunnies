@@ -11,7 +11,7 @@ cairotest_CXXFLAGS = -std=c++11 @CAIROMM_CFLAGS@ @LIBCWD_R_FLAGS@
 cairotest_LDADD = @CAIROMM_LIBS@ @LIBCWD_R_LIBS@
 
 helloworld_SOURCES = \
-	helloworld.cxx \
+	hello_world.cxx \
 	HelloWorld.cxx \
 	HelloWorld.h
 
@@ -20,7 +20,7 @@ helloworld_LDADD = @GTKMM_LIBS@ @LIBCWD_R_LIBS@
 
 
 myarea_SOURCES = \
-	myarea.cxx \
+	my_area.cxx \
 	MyArea.cxx \
 	MyArea.h
 

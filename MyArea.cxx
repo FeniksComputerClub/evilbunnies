@@ -1,5 +1,8 @@
 #include "MyArea.h"
 #include <cairomm/context.h>
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
 
 MyArea::MyArea()
 {

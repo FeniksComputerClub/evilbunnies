@@ -22,7 +22,9 @@ helloworld_LDADD = @GTKMM_LIBS@ @LIBCWD_R_LIBS@
 myarea_SOURCES = \
 	my_area.cxx \
 	MyArea.cxx \
-	MyArea.h
+	MyArea.h \
+	Bunny.cxx \
+	Bunny.h
 
 myarea_CXXFLAGS = -std=c++11 @GTKMM_CFLAGS@ @LIBCWD_R_FLAGS@
 myarea_LDADD = @GTKMM_LIBS@ @LIBCWD_R_LIBS@

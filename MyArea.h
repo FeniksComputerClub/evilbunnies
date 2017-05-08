@@ -1,9 +1,13 @@
 #pragma once
 
 #include <gtkmm/drawingarea.h>
+#include "Bunny.h"
 
 class MyArea : public Gtk::DrawingArea
 {
+  private:
+    Bunny m_bunny;
+
   public:
     static int constexpr width = 600;
     static int constexpr height = 600;

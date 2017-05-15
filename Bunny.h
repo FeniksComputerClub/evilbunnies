@@ -1,9 +1,9 @@
 #include <gtkmm/drawingarea.h>
 
 class Bunny {
-  static constexpr float radius = 0.005;
-  float m_x;
-  float m_y;
+  static constexpr double radius = 0.005;
+  double m_x;
+  double m_y;
   public:
   Bunny() : m_x(0.0), m_y(0.0) { }
 

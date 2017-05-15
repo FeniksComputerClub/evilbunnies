@@ -19,14 +19,15 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->save();
 
   // Move coordinate system to the center of the window.
-  cr->scale(1.0 / width, 1.0 / height);
+  cr->scale(width, height);
   cr->translate(0.5, 0.5);
 
-  m_bunny.on_draw(cr);
+  bool handled = m_bunny.on_draw(cr);
 
   // Restore context.
   cr->restore();
-  return true;
+
+  return handled;
 }
 
 int constexpr MyArea::width;

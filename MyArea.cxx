@@ -1,4 +1,6 @@
 #include "MyArea.h"
+#include "clock.h"
+#include <iostream>
 #include <cairomm/context.h>
 
 MyArea::MyArea()
@@ -11,6 +13,7 @@ MyArea::~MyArea()
 
 bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
+  std::cout << "MyArea::on_draw(" << (void*)&cr << std::endl;
 
   // Save context.
   cr->save();
@@ -19,10 +22,12 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->scale(width, height);
   cr->translate(0.5, 0.5);
 
-  bool handled = m_bunny.on_draw(cr);
+  bool handled = m_bunny.on_draw(cr, clock_type::now());
 
   // Restore context.
   cr->restore();
+
+  queue_draw();
 
   return handled;
 }

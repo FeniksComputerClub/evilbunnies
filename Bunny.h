@@ -1,4 +1,5 @@
 #include <gtkmm/drawingarea.h>
+#include "clock.h"
 
 class Bunny {
   static constexpr double radius = 0.02;
@@ -7,5 +8,5 @@ class Bunny {
   public:
   Bunny() : m_x(0.0), m_y(0.0) { }
 
-  bool on_draw(Cairo::RefPtr<Cairo::Context> const& cr);
+  bool on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& time);
 };

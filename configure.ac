@@ -39,6 +39,9 @@ PKG_CHECK_MODULES([GTKMM], [gtkmm-3.0])
 # We use doxygen for documentation.
 #CW_DOXYGEN
 
+CXXFLAGS="${CXXFLAGS}"
+AC_SUBST(CXXFLAGS)
+
 ### Uncomment this to add more configuration output files.
 #AC_CONFIG_FILES([src/Makefile] [evilbunnies.pc])
 

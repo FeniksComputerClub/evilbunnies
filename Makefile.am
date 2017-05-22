@@ -2,6 +2,8 @@ include $(srcdir)/cwm4/root_makefile_top.am
 
 SUBDIRS = @CW_SUBDIRS@
 
+CXXFLAGS = @CXXFLAGS@
+
 bin_PROGRAMS = cairotest helloworld myarea
 
 cairotest_SOURCES = \

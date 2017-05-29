@@ -1,3 +1,4 @@
+#include "sys.h"
 #include "MyArea.h"
 #include "clock.h"
 #include <iostream>
@@ -13,8 +14,6 @@ MyArea::~MyArea()
 
 bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
-  std::cout << "MyArea::on_draw(" << (void*)&cr << std::endl;
-
   // Save context.
   cr->save();
 

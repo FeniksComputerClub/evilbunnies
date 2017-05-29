@@ -1,22 +1,29 @@
+#include "sys.h"
+#include "debug.h"
 #include "MyArea.h"
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
 
 int main(int argc, char** argv)
 {
-   auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+#ifdef DEBUGGLOBAL
+  GlobalObjectManager::main_entered();
+#endif
+  Debug(NAMESPACE_DEBUG::init());
 
-   Gtk::Window win;
-   win.set_title("BUNNIES!");
+  auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 
-   // Make window as large as our drawing area.
-   win.set_size_request(MyArea::width, MyArea::height);
-   win.set_resizable(false); 
+  Gtk::Window win;
+  win.set_title("BUNNIES!");
 
-   MyArea area;
+  // Make window as large as our drawing area.
+  win.set_size_request(MyArea::width, MyArea::height);
+  win.set_resizable(false);
 
-   win.add(area);
-   area.show();
+  MyArea area;
 
-   return app->run(win);
+  win.add(area);
+  area.show();
+
+  return app->run(win);
 }

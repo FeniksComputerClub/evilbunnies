@@ -1,3 +1,5 @@
+AM_CPPFLAGS = -iquote $(top_srcdir) -iquote $(top_srcdir)/cwds
+
 include $(srcdir)/cwm4/root_makefile_top.am
 
 SUBDIRS = @CW_SUBDIRS@

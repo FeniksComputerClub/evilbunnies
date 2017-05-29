@@ -13,13 +13,13 @@ class Bunny {
   public:
   Bunny() : m_radius(0.02), m_x(0.0), m_y(0.0), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
-    clamp();
+    clamp(m_x, m_y);
   }
 
-  void clamp()
+  void clamp(double& x, double& y)
   {
-    m_x = std::max(m_radius, std::min(m_x, 1.0 - m_radius));
-    m_y = std::max(m_radius, std::min(m_y, 1.0 - m_radius));
+    x = std::max(m_radius, std::min(x, 1.0 - m_radius));
+    y = std::max(m_radius, std::min(y, 1.0 - m_radius));
   }
 
   bool on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& time);

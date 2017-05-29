@@ -10,3 +10,6 @@
 [submodule "threadsafe"]
 	path = threadsafe
 	url = https://github.com/CarloWood/ai-threadsafe.git
+[submodule "cwds"]
+	path = cwds
+	url = https://github.com/CarloWood/cwds.git

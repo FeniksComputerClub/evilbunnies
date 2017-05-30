@@ -15,5 +15,34 @@ bool Bunny::on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& /
   
   //move bunny
   m_x += 0.01;
+  clamp(m_x, m_y);
   return true;
+}
+
+char const* Task::state_str_impl(state_type run_state) const
+{
+  switch(run_state)
+  {
+    AI_CASE_RETURN(Task_start);
+    AI_CASE_RETURN(Task_done);
+  }
+  return "UNKNOWN";
+}
+
+void Task::multiplex_impl(state_type run_state)
+{
+  switch(run_state)
+  {
+    case Task_start:
+      if (!m_do_finish)
+      {
+        wait(1);
+        break;
+      }
+      set_state(Task_done);
+      /*fall-through*/
+    case Task_done:
+      finish();
+      break;
+  }
 }

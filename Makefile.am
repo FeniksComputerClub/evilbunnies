@@ -1,3 +1,5 @@
+AM_CPPFLAGS = -iquote $(top_srcdir) -iquote $(top_srcdir)/cwds
+
 include $(srcdir)/cwm4/root_makefile_top.am
 
 SUBDIRS = @CW_SUBDIRS@
@@ -29,6 +31,6 @@ myarea_SOURCES = \
 	Bunny.h
 
 myarea_CXXFLAGS = -std=c++11 @GTKMM_CFLAGS@ @LIBCWD_R_FLAGS@
-myarea_LDADD = ../statefultask/statefultask.la ../threadsafe/threadsafe.la ../utils/libutils_r.la ../cwds/libcwds_r.la @GTKMM_LIBS@ @LIBCWD_R_LIBS@
+myarea_LDADD = statefultask/libstatefultask.la threadsafe/libthreadsafe.la utils/libutils_r.la cwds/libcwds_r.la @GTKMM_LIBS@
 
 include $(srcdir)/cwm4/root_makefile_bottom.am

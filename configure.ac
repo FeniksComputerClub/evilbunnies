@@ -27,7 +27,7 @@ define(CW_BUGREPORT, [none@gmail.com])
 # and optimization flags (-O*) that which will be stripped when not required.
 define(CW_COMPILE_FLAGS, [-W -Wall -Woverloaded-virtual -Wundef -Wpointer-arith -Wwrite-strings -Winline])
 # CW_THREADS can be [no] (single-threaded), [yes] (multi-threaded) or [both] (single and multi-threaded applications).
-define(CW_THREADS, [both])
+define(CW_THREADS, [yes])
 
 # Include cwm4 header.
 m4_include([cwm4/configure_ac_top.m4])

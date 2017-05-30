@@ -19,7 +19,7 @@ bool Bunny::on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& /
   return true;
 }
 
-char const* Task::state_str_impl(state_type run_state) const
+char const* Bunny::state_str_impl(state_type run_state) const
 {
   switch(run_state)
   {
@@ -29,7 +29,7 @@ char const* Task::state_str_impl(state_type run_state) const
   return "UNKNOWN";
 }
 
-void Task::multiplex_impl(state_type run_state)
+void Bunny::multiplex_impl(state_type run_state)
 {
   switch(run_state)
   {

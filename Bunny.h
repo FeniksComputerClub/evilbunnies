@@ -1,6 +1,7 @@
-#include <gtkmm/drawingarea.h>
 #include "clock.h"
+#include "debug.h"
 #include "statefultask/AIEngine.h"
+#include <gtkmm/drawingarea.h>
 #include <algorithm>
 
 // Bunnies live in a pen of size 1.0 by 1.0,
@@ -21,7 +22,9 @@ class Bunny : public AIStatefulTask {
   void multiplex_impl(state_type run_state) override;
 
   public:
-  Bunny() : m_radius(0.02), m_x(0.0), m_y(0.0), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+  Bunny() :
+      AIStatefulTask(DEBUG_ONLY(true)),
+      m_radius(0.02), m_x(0.0), m_y(0.0), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
     clamp(m_x, m_y);
   }

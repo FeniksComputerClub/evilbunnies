@@ -34,11 +34,6 @@ void Bunny::multiplex_impl(state_type run_state)
   switch(run_state)
   {
     case Task_start:
-      if (!m_do_finish)
-      {
-        wait(1);
-        break;
-      }
       set_state(Task_done);
       /*fall-through*/
     case Task_done:

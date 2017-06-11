@@ -6,7 +6,7 @@
 class MyArea : public Gtk::DrawingArea
 {
   private:
-    Bunny m_bunny;
+    std::vector<boost::intrusive_ptr<Bunny>> m_bunnies;
 
   public:
     static int constexpr width = 600;
@@ -14,6 +14,7 @@ class MyArea : public Gtk::DrawingArea
 
     MyArea();
     virtual ~MyArea();
+    void add_bunny(boost::intrusive_ptr<Bunny>& bunny_to_add);
 
   protected:
     // Override default signal handler:

@@ -12,6 +12,11 @@ MyArea::~MyArea()
 {
 }
 
+void MyArea::add_bunny(boost::intrusive_ptr<Bunny>& bunny_to_add)
+{
+  m_bunnies.push_back(bunny_to_add);
+}
+
 bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
   // Save context.
@@ -20,15 +25,19 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // Move coordinate system to the center of the window.
   cr->scale(width, -height);
   cr->translate(0.0, -1.0);
-
-  bool handled = m_bunny.on_draw(cr, clock_type::now());
-
+  
+  int handled = 0;
+  for(boost::intrusive_ptr<Bunny> bunny_to_draw : m_bunnies)
+  {
+    handled += bunny_to_draw->on_draw(cr, clock_type::now());
+  }
+  std::cout << "drawn " << handled << " bunnies" << std::endl;
   // Restore context.
   cr->restore();
 
   queue_draw();
 
-  return handled;
+  return (handled == m_bunnies.size());
 }
 
 int constexpr MyArea::width;

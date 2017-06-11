@@ -21,6 +21,12 @@ int main(int argc, char** argv)
   win.set_resizable(false);
 
   MyArea area;
+  
+  for(int i=1;i<=3;++i)
+  {
+    boost::intrusive_ptr<Bunny> bunny = new Bunny;
+    area.add_bunny(bunny);
+  }
 
   win.add(area);
   area.show();

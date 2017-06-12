@@ -1,8 +1,15 @@
 #include "sys.h"
 #include "debug.h"
 #include "MyArea.h"
-#include <gtkmm/application.h>
-#include <gtkmm/window.h>
+#include "statefultask/AIEngine.h"
+#include "statefultask/AIAuxiliaryThread.h"
+#include <gtkmm.h>
+
+bool on_idle()
+{
+  gMainThreadEngine.mainloop();
+  return true;
+}
 
 int main(int argc, char** argv)
 {
@@ -20,16 +27,21 @@ int main(int argc, char** argv)
   win.set_size_request(MyArea::width, MyArea::height);
   win.set_resizable(false);
 
+  AIAuxiliaryThread::start();
+
   MyArea area;
-  
   for(int i=1;i<=3;++i)
   {
-    boost::intrusive_ptr<Bunny> bunny = new Bunny;
+    boost::intrusive_ptr<Bunny> bunny = new Bunny(area);
     area.add_bunny(bunny);
+    bunny->run();
   }
 
   win.add(area);
   area.show();
+  
+  //run statefultask's mainloop whenever idle
+  Glib::signal_idle().connect( sigc::ptr_fun(&on_idle) );
 
   return app->run(win);
 }

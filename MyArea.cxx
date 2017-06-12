@@ -35,8 +35,6 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // Restore context.
   cr->restore();
 
-  queue_draw();
-
   return (handled == m_bunnies.size());
 }
 

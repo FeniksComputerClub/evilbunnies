@@ -1,15 +1,20 @@
 [submodule "cwm4"]
 	path = cwm4
 	url = https://github.com/CarloWood/cwm4.git
+	branch = master
 [submodule "statefultask"]
 	path = statefultask
 	url = https://github.com/CarloWood/ai-statefultask.git
+	branch = master
 [submodule "utils"]
 	path = utils
 	url = https://github.com/CarloWood/ai-utils.git
+	branch = master
 [submodule "threadsafe"]
 	path = threadsafe
 	url = https://github.com/CarloWood/ai-threadsafe.git
+	branch = master
 [submodule "cwds"]
 	path = cwds
 	url = https://github.com/CarloWood/cwds.git
+	branch = master

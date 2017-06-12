@@ -26,7 +26,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->scale(width, -height);
   cr->translate(0.0, -1.0);
   
-  int handled = 0;
+  size_t handled = 0;
   for(boost::intrusive_ptr<Bunny> bunny_to_draw : m_bunnies)
   {
     handled += bunny_to_draw->on_draw(cr, clock_type::now());
@@ -35,7 +35,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   // Restore context.
   cr->restore();
 
-  return (handled == m_bunnies.size());
+  return handled == m_bunnies.size();
 }
 
 int constexpr MyArea::width;

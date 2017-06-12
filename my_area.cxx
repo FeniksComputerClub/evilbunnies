@@ -7,6 +7,7 @@
 
 bool on_idle()
 {
+  //DoutEntering(dc::notice, "on_idle()");
   gMainThreadEngine.mainloop();
   return true;
 }
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
   AIAuxiliaryThread::start();
 
   MyArea area;
-  for(int i=1;i<=3;++i)
+  for(int i = 1; i <= 3; ++i)
   {
     boost::intrusive_ptr<Bunny> bunny = new Bunny(area);
     area.add_bunny(bunny);

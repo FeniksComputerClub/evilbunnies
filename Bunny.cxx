@@ -41,7 +41,7 @@ void Bunny::multiplex_impl(state_type run_state)
       previousx = m_x;
       clamp(m_x, m_y);
       m_area.queue_draw();
-      if(m_x != previousx)
+      if (m_x != previousx)
         set_state(move_left);
       yield();
       break;
@@ -50,7 +50,7 @@ void Bunny::multiplex_impl(state_type run_state)
       previousx = m_x;
       clamp(m_x, m_y);
       m_area.queue_draw();
-      if(m_x != previousx)
+      if (m_x != previousx)
         set_state(move_right);
       yield();
       break;

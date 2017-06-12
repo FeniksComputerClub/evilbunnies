@@ -7,6 +7,7 @@
 
 bool on_idle()
 {
+  std::cout << "Calling gMainThreadEngine.mainloop()" << std::endl;
   gMainThreadEngine.mainloop();
   return true;
 }

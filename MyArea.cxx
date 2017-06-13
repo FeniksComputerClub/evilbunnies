@@ -31,7 +31,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   {
     handled += bunny_to_draw->on_draw(cr, clock_type::now());
   }
-  std::cout << "drawn " << handled << " bunnies" << std::endl;
+  DoutEntering(dc::notice, "drawn " handled " bunnies");
   // Restore context.
   cr->restore();
 

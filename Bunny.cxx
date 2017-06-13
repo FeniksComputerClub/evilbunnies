@@ -34,10 +34,10 @@ void Bunny::multiplex_impl(state_type run_state)
   {
     double previousx;
     case start:
-      m_x += (rand() % 10 + 1) / 10.0;
+      m_x += (rand() % 100 + 1) / 100.0;
       set_state(move_right);
     case move_right:
-      m_x += 0.01;
+      m_x += 0.001;
       previousx = m_x;
       clamp(m_x, m_y);
       m_area.queue_draw();
@@ -46,7 +46,7 @@ void Bunny::multiplex_impl(state_type run_state)
       yield();
       break;
     case move_left:
-      m_x -= 0.01;
+      m_x -= 0.001;
       previousx = m_x;
       clamp(m_x, m_y);
       m_area.queue_draw();

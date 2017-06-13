@@ -31,7 +31,7 @@ class Bunny : public AIStatefulTask {
 
   public:
   Bunny(MyArea& area) :
-      AIStatefulTask(DEBUG_ONLY(true)),
+      AIStatefulTask(DEBUG_ONLY(false)),
       m_area(area), m_radius(0.02), m_x(0.0), m_y(0.0), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
     clamp(m_x, m_y);

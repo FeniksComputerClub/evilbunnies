@@ -30,8 +30,9 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   for(boost::intrusive_ptr<Bunny> bunny_to_draw : m_bunnies)
   {
     handled += bunny_to_draw->on_draw(cr, clock_type::now());
+    bunny_to_draw->signal(1);
   }
-  DoutEntering(dc::notice, "drawn " handled " bunnies");
+  DoutEntering(dc::notice, "drawn " << handled << "bunnies");
   // Restore context.
   cr->restore();
 

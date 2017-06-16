@@ -9,13 +9,30 @@
 //forward declaration
 class MyArea;
 
+struct Pos{
+  double x;
+  double y;
+  public:
+  double getx() {return x;}
+  double gety() {return y;}
+  double setx(double value) {return x = value;}
+  double sety(double value) {return y = value;}
+  double addx(double value) {return x += value;}
+  double addy(double value) {return y += value;}
+  void clamp(double radius) 
+  {
+    x = std::max(radius, std::min(x, 1.0 - radius));
+    y = std::max(radius, std::min(y, 1.0 - radius));
+  }
+};
+
 // Bunnies live in a pen of size 1.0 by 1.0,
 // with the origin in the bottom-left.
 class Bunny : public AIStatefulTask {
+  using pos_t = aithreadsafe::Wrapper<Pos, aithreadsafe::policy::Primitive<AIMutex>>;
   MyArea& m_area;
   double m_radius;
-  double m_x;
-  double m_y;
+  pos_t pos;
   Cairo::RefPtr<Cairo::Pattern> m_pattern;
 
   //statefultask
@@ -32,9 +49,10 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_area(area), m_radius(0.02), m_x(0.0), m_y(0.0), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_area(area), m_radius(0.02), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
-    clamp(m_x, m_y);
+    pos_t::wat pos_w(pos);
+    pos_w->clamp(m_radius);
   }
 
   void clamp(double& x, double& y)

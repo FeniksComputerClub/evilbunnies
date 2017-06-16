@@ -10,8 +10,11 @@
 
 bool Bunny::on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& /*time*/)
 {
+  //lock pos
+  pos_t::wat pos_w(pos);
+
   cr->set_source(m_pattern);
-  cr->arc(m_x, m_y, m_radius, 0.0, 2 * M_PI);
+  cr->arc(pos_w->getx(), pos_w->gety(), m_radius, 0.0, 2 * M_PI);
   cr->fill_preserve();
   return true;
 }
@@ -30,32 +33,39 @@ char const* Bunny::state_str_impl(state_type run_state) const
 
 void Bunny::multiplex_impl(state_type run_state)
 {
+  //lock pos
+  pos_t::wat pos_w(pos);
+  const double increment = 0.01;
+  double previousx;
   switch(run_state)
   {
-    double previousx;
     case start:
-      m_x += (rand() % 100 + 1) / 100.0;
+      pos_w->addx((rand() % 100 + 1) / 100.0);
       set_state(move_right);
     case move_right:
-      m_x += 0.001;
-      previousx = m_x;
-      clamp(m_x, m_y);
-      m_area.queue_draw();
-      if (m_x != previousx)
+      pos_w->addx(increment);
+      previousx = pos_w->getx();
+      pos_w->clamp(m_radius);
+      if (pos_w->getx() != previousx)
+        pos_w->addy(m_radius * 2);
+        pos_w->clamp(m_radius);
         set_state(move_left);
       wait(1);
       break;
     case move_left:
-      m_x -= 0.001;
-      previousx = m_x;
-      clamp(m_x, m_y);
-      m_area.queue_draw();
-      if (m_x != previousx)
+      pos_w->addx(0 - increment);
+      previousx = pos_w->getx();
+      pos_w->clamp(m_radius);
+      if (pos_w->getx() != previousx){
+        pos_w->addy(m_radius * 2);
+        pos_w->clamp(m_radius);
         set_state(move_right);
+      }
       wait(1);
       break;
     case done:
       finish();
       break;
   }
+  m_area.queue_draw();
 }

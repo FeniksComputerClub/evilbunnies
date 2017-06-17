@@ -15,6 +15,7 @@ bool Bunny::on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& /
 
   cr->set_source(m_pattern);
   cr->arc(pos_w->getx(), pos_w->gety(), m_radius, 0.0, 2 * M_PI);
+  cr->close_path()
   cr->fill_preserve();
   return true;
 }

@@ -46,10 +46,11 @@ void Bunny::multiplex_impl(state_type run_state)
       pos_w->addx(increment);
       previousx = pos_w->getx();
       pos_w->clamp(m_radius);
-      if (pos_w->getx() != previousx)
+      if (pos_w->getx() != previousx){
         pos_w->addy(m_radius * 2);
         pos_w->clamp(m_radius);
         set_state(move_left);
+      }
       wait(1);
       break;
     case move_left:

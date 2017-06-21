@@ -44,7 +44,7 @@ void Bunny::multiplex_impl(state_type run_state)
       set_state(change);
       //fallthrough
     case change:
-      m_direction = ((rand() % 100 + 1) / 100.0) * 2 * M_PI;
+      m_direction = ((rand() % 360) / 360.0) * 2 * M_PI;
       set_state(move);
       //fallthrough
     case move:
@@ -55,8 +55,8 @@ void Bunny::multiplex_impl(state_type run_state)
       clamp(pos_w);
       if ((previous.getx() != pos_w->getx()) || (previous.gety() != pos_w->gety()))
       {
-        pos_w->setx(previous.getx());
-        pos_w->sety(previous.gety());
+        pos_w->setx(previous.getx() - sin(m_direction) * m_speed);
+        pos_w->sety(previous.gety() - cos(m_direction) * m_speed);
         set_state(change);
         yield();
       }

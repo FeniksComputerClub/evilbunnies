@@ -3,6 +3,7 @@
 #include "MyArea.h"
 #include <thread>
 #include <chrono>
+#include <math.h>
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -25,8 +26,8 @@ char const* Bunny::state_str_impl(state_type run_state) const
   switch(run_state)
   {
     AI_CASE_RETURN(start);
-    AI_CASE_RETURN(move_right);
-    AI_CASE_RETURN(move_left);
+    AI_CASE_RETURN(change);
+    AI_CASE_RETURN(move);
     AI_CASE_RETURN(done);
   }
   return "UNKNOWN";
@@ -36,36 +37,33 @@ void Bunny::multiplex_impl(state_type run_state)
 {
   //lock pos
   pos_t::wat pos_w(pos);
-  double const increment = 0.01;
-  double previousx;
   switch(run_state)
   {
     case start:
       pos_w->addx((rand() % 100 + 1) / 100.0);
-      set_state(move_right);
-    case move_right:
-      pos_w->addx(increment);
-      previousx = pos_w->getx();
+      set_state(change);
+      //fallthrough
+    case change:
+      m_direction = ((rand() % 100 + 1) / 100.0) * 2 * M_PI;
+      set_state(move);
+      //fallthrough
+    case move:
+    {
+      pos_w->addx(sin(m_direction) * m_speed);
+      pos_w->addy(cos(m_direction) * m_speed);
+      Pos previous(*pos_w);
       clamp(pos_w);
-      if (pos_w->getx() != previousx){
-        pos_w->addy(m_radius * 2);
-        clamp(pos_w);
-        set_state(move_left);
-      }
-      wait(1);
-      break;
-    case move_left:
-      pos_w->addx(0 - increment);
-      previousx = pos_w->getx();
-      clamp(pos_w);
-      if (pos_w->getx() != previousx)
+      if ((previous.getx() != pos_w->getx()) || (previous.gety() != pos_w->gety()))
       {
-        pos_w->addy(m_radius * 2);
-        clamp(pos_w);
-        set_state(move_right);
+        pos_w->setx(previous.getx());
+        pos_w->sety(previous.gety());
+        set_state(change);
+        yield();
       }
-      wait(1);
+      else
+        wait(1);
       break;
+    }
     case done:
       finish();
       break;

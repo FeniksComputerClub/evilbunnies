@@ -10,39 +10,44 @@
 class MyArea;
 
 class Pos {
- private:
-  double x;
-  double y;
+  private:
+    double x;
+    double y;
 
- public:
-  double getx() const { return x; }
-  double gety() const { return y; }
-  double setx(double value) { return x = value; }
-  double sety(double value) { return y = value; }
-  double addx(double value) { return x += value; }
-  double addy(double value) { return y += value; }
-  void clamp(double radius) 
-  {
-    x = std::max(radius, std::min(x, 1.0 - radius));
-    y = std::max(radius, std::min(y, 1.0 - radius));
-  }
+  public:
+    Pos() {}
+    Pos(Pos const& copy) : x(copy.getx()), y(copy.gety()) {}
+    Pos get() const { return Pos(*this); }
+    double getx() const { return x; }
+    double gety() const { return y; }
+    double setx(double value) { return x = value; }
+    double sety(double value) { return y = value; }
+    double addx(double value) { return x += value; }
+    double addy(double value) { return y += value; }
+    void clamp(double radius)
+    {
+      x = std::max(radius, std::min(x, 1.0 - radius));
+      y = std::max(radius, std::min(y, 1.0 - radius));
+    }
 };
 
 // Bunnies live in a pen of size 1.0 by 1.0,
 // with the origin in the bottom-left.
 class Bunny : public AIStatefulTask {
   using pos_t = aithreadsafe::Wrapper<Pos, aithreadsafe::policy::Primitive<AIMutex>>;
-  MyArea& m_area;
-  double m_radius;
   pos_t pos;
+  double m_radius;
+  double m_direction;
+  double m_speed;
+  MyArea& m_area;
   Cairo::RefPtr<Cairo::Pattern> m_pattern;
 
   //statefultask
   using direct_base_type = AIStatefulTask;
   enum design_state_type {
     start = direct_base_type::max_state,
-    move_right,
-    move_left,
+    change,
+    move,
     done,
   };
   char const* state_str_impl(state_type run_state) const override;
@@ -51,7 +56,7 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_direction(0.0), m_speed(0.005), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
     m_radius = (rand() % 3 + 1) / 100.0;
     pos_t::wat pos_w(pos);

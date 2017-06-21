@@ -58,7 +58,7 @@ class Bunny : public AIStatefulTask {
     pos_w->clamp(m_radius);
   }
 
-  void clamp(pos_t::wat pos_w)
+  void clamp(pos_t::wat const& pos_w)
   {
     pos_w->setx(std::max(m_radius, std::min(pos_w->getx(), 1.0 - m_radius)));
     pos_w->sety(std::max(m_radius, std::min(pos_w->gety(), 1.0 - m_radius)));

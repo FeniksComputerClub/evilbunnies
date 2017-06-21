@@ -15,6 +15,7 @@ bool Bunny::on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& /
 
   cr->set_source(m_pattern);
   cr->arc(pos_w->getx(), pos_w->gety(), m_radius, 0.0, 2 * M_PI);
+  cr->close_path();
   cr->fill_preserve();
   return true;
 }
@@ -45,21 +46,22 @@ void Bunny::multiplex_impl(state_type run_state)
     case move_right:
       pos_w->addx(increment);
       previousx = pos_w->getx();
-      pos_w->clamp(m_radius);
-      if (pos_w->getx() != previousx)
+      clamp(pos_w);
+      if (pos_w->getx() != previousx){
         pos_w->addy(m_radius * 2);
-        pos_w->clamp(m_radius);
+        clamp(pos_w);
         set_state(move_left);
+      }
       wait(1);
       break;
     case move_left:
       pos_w->addx(0 - increment);
       previousx = pos_w->getx();
-      pos_w->clamp(m_radius);
+      clamp(pos_w);
       if (pos_w->getx() != previousx)
       {
         pos_w->addy(m_radius * 2);
-        pos_w->clamp(m_radius);
+        clamp(pos_w);
         set_state(move_right);
       }
       wait(1);

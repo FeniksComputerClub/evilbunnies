@@ -49,16 +49,17 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_area(area), m_radius(0.02), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
+    m_radius = (rand() % 3 + 1) / 100.0;
     pos_t::wat pos_w(pos);
     pos_w->clamp(m_radius);
   }
 
-  void clamp(double& x, double& y)
+  void clamp(pos_t::wat pos_w)
   {
-    x = std::max(m_radius, std::min(x, 1.0 - m_radius));
-    y = std::max(m_radius, std::min(y, 1.0 - m_radius));
+    pos_w->setx(std::max(m_radius, std::min(pos_w->getx(), 1.0 - m_radius)));
+    pos_w->sety(std::max(m_radius, std::min(pos_w->gety(), 1.0 - m_radius)));
   }
 
   bool on_draw(Cairo::RefPtr<Cairo::Context> const& cr, time_point const& time);

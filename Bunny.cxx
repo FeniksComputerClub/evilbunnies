@@ -35,7 +35,7 @@ void Bunny::multiplex_impl(state_type run_state)
 {
   //lock pos
   pos_t::wat pos_w(pos);
-  const double increment = 0.01;
+  double const increment = 0.01;
   double previousx;
   switch(run_state)
   {
@@ -56,7 +56,8 @@ void Bunny::multiplex_impl(state_type run_state)
       pos_w->addx(0 - increment);
       previousx = pos_w->getx();
       pos_w->clamp(m_radius);
-      if (pos_w->getx() != previousx){
+      if (pos_w->getx() != previousx)
+      {
         pos_w->addy(m_radius * 2);
         pos_w->clamp(m_radius);
         set_state(move_right);

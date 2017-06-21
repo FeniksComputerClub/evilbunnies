@@ -9,16 +9,18 @@
 //forward declaration
 class MyArea;
 
-struct Pos{
+class Pos {
+ private:
   double x;
   double y;
-  public:
-  double getx() {return x;}
-  double gety() {return y;}
-  double setx(double value) {return x = value;}
-  double sety(double value) {return y = value;}
-  double addx(double value) {return x += value;}
-  double addy(double value) {return y += value;}
+
+ public:
+  double getx() const { return x; }
+  double gety() const { return y; }
+  double setx(double value) { return x = value; }
+  double sety(double value) { return y = value; }
+  double addx(double value) { return x += value; }
+  double addy(double value) { return y += value; }
   void clamp(double radius) 
   {
     x = std::max(radius, std::min(x, 1.0 - radius));

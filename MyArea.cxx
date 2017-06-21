@@ -27,12 +27,12 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   cr->translate(0.0, -1.0);
   
   size_t handled = 0;
-  for(boost::intrusive_ptr<Bunny> bunny_to_draw : m_bunnies)
+  for (boost::intrusive_ptr<Bunny> bunny_to_draw : m_bunnies)
   {
     handled += bunny_to_draw->on_draw(cr, clock_type::now());
     bunny_to_draw->signal(1);
   }
-  Dout(dc::notice, "drawn " << handled << "bunnies");
+  Dout(dc::notice, "Drawn " << handled << " bunnies.");
   // Restore context.
   cr->restore();
 

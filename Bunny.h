@@ -3,6 +3,7 @@
 #include "clock.h"
 #include "debug.h"
 #include "statefultask/AIEngine.h"
+#include "statefultask/AITimer.h"
 #include <gtkmm/drawingarea.h>
 #include <algorithm>
 
@@ -42,6 +43,7 @@ class Bunny : public AIStatefulTask {
   double m_speed;
   MyArea& m_area;
   Cairo::RefPtr<Cairo::Pattern> m_pattern;
+  boost::intrusive_ptr<AITimer> m_timer;
 
   //statefultask
   using direct_base_type = AIStatefulTask;
@@ -57,7 +59,9 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_direction(0.0), m_speed(0.005), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_direction(0.0), m_speed(0.005), m_area(area),
+      m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0)),
+      m_timer(new AITimer)
   {
     m_radius = (rand() % 3 + 1) / 100.0;
     pos_t::wat pos_w(pos);

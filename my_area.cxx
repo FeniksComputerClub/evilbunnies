@@ -11,6 +11,11 @@ bool on_idle()
   return true;
 }
 
+void on_timeout()
+{
+  Dout(dc::notice, "TIMEOUT!"); 
+}
+
 int main(int argc, char** argv)
 {
 #ifdef DEBUGGLOBAL
@@ -30,7 +35,7 @@ int main(int argc, char** argv)
   AIAuxiliaryThread::start();
 
   MyArea area;
-  for(int i = 0; i < 10; ++i)
+  for (int i = 0; i < 10; ++i)
   {
     boost::intrusive_ptr<Bunny> bunny = new Bunny(area);
     area.add_bunny(bunny);
@@ -41,7 +46,9 @@ int main(int argc, char** argv)
   area.show();
   
   //run statefultask's mainloop whenever idle
-  Glib::signal_idle().connect( sigc::ptr_fun(&on_idle) );
+  Glib::signal_idle().connect(sigc::ptr_fun(&on_idle));
+
+  Glib::signal_timeout().connect_once(sigc::ptr_fun(&on_timeout), 1000);
 
   return app->run(win);
 }

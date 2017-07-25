@@ -38,7 +38,8 @@ class Bunny : public AIStatefulTask {
   using pos_t = aithreadsafe::Wrapper<Pos, aithreadsafe::policy::Primitive<AIMutex>>;
   pos_t pos;
   double m_radius;
-  double m_direction;
+  double m_deltax;
+  double m_deltay;
   double m_speed;
   MyArea& m_area;
   Cairo::RefPtr<Cairo::Pattern> m_pattern;
@@ -57,17 +58,17 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_direction(0.0), m_speed(0.005), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_speed(0.05), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
   {
     m_radius = (rand() % 3 + 1) / 100.0;
     pos_t::wat pos_w(pos);
     pos_w->clamp(m_radius);
   }
 
-  void clamp(pos_t::wat const& pos_w)
+  bool is_in(pos_t::rat const& pos_r, Pos const& minpos = Pos(0.0, 0.0), Pos const& maxpos = Pos(1.0, 1.0)) const
   {
-    pos_w->setx(std::max(m_radius, std::min(pos_w->getx(), 1.0 - m_radius)));
-    pos_w->sety(std::max(m_radius, std::min(pos_w->gety(), 1.0 - m_radius)));
+    return minpos.getx() + m_radius < pos_r->getx() && pos_r->getx() < maxpos.getx() - m_radius &&
+           minpos.gety() + m_radius < pos_r->gety() && pos_r->gety() < maxpos.gety() - m_radius;
   }
 
   Pos get_pos()

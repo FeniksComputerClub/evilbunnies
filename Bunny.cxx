@@ -36,28 +36,41 @@ char const* Bunny::state_str_impl(state_type run_state) const
 void Bunny::multiplex_impl(state_type run_state)
 {
   //lock pos
-  pos_t::wat pos_w(pos);
   switch(run_state)
   {
     case start:
+    {
+      pos_t::wat pos_w(pos);
       pos_w->setx((rand() % 100 + 1) / 100.0);
       pos_w->sety((rand() % 100 + 1) / 100.0);
       set_state(change);
       //fallthrough
+    }
     case change:
-      m_direction = ((rand() % 360) / 360.0) * 2 * M_PI;
+    {
+      double direction = ((rand() % 360) / 360.0) * 2 * M_PI;
+      m_deltax = sin(direction) * m_speed;
+      m_deltay = cos(direction) * m_speed;
       set_state(move);
       //fallthrough
+    }
     case move:
     {
-      pos_w->addx(sin(m_direction) * m_speed);
-      pos_w->addy(cos(m_direction) * m_speed);
-      Pos previous(*pos_w);
-      clamp(pos_w);
-      if ((previous.getx() != pos_w->getx()) || (previous.gety() != pos_w->gety()))
+      double move_x = m_deltax * m_speed;
+      double move_y = m_deltay * m_speed;
+      bool inside;
       {
-        pos_w->setx(previous.getx() - sin(m_direction) * m_speed);
-        pos_w->sety(previous.gety() - cos(m_direction) * m_speed);
+        pos_t::wat pos_w(pos);
+        pos_w->addx(move_x);
+        pos_w->addy(move_y);
+        inside = is_in(pos_w);
+      }
+      if (!inside)
+      {
+        {
+          pos_t::wat pos_w(pos);
+          pos_w->clamp(m_radius);
+        }
         set_state(change);
         yield();
       }

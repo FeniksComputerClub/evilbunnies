@@ -34,7 +34,7 @@ bool MyArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
   }
   Dout(dc::notice, "Drawn " << handled << " bunnies.");
 
-#if thisisnotaccomment
+#if 0 //draw lines between all bunnies to test their locations
   std::vector<Pos> locations;
   cr->begin_new_path();
   cr->set_line_width(0.001);

@@ -58,7 +58,8 @@ class Bunny : public AIStatefulTask {
   public:
   Bunny(MyArea& area) :
       AIStatefulTask(DEBUG_ONLY(false)),
-      m_speed(0.05), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0))
+      m_speed(0.05), m_area(area), m_pattern(Cairo::SolidPattern::create_rgb(1.0, 0.0, 0.0)),
+      m_deltax(0.0), m_deltay(0.0)
   {
     m_radius = (rand() % 3 + 1) / 100.0;
     pos_t::wat pos_w(pos);
